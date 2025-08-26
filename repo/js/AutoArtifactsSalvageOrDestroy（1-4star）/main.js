@@ -1,3 +1,5 @@
+const outDatedRo = RecognitionObject.TemplateMatch(file.ReadImageMatSync("assets/RecognitionObject/ConfirmButton.png"), 760, 700, 100, 100);
+
 (async function () {
     // 读取用户设置
     let operationType = settings.operationType || "分解"; // 默认为分解
@@ -15,6 +17,10 @@
     async function salvage() {
         await genshin.returnMainUi();
         keyPress("B"); await sleep(2000); // 打开背包
+        if (await findAndClick(outDatedRo)) {
+            log.info("检测到过期物品弹窗，处理");
+            await sleep(1000);
+        }
         click(670, 40); await sleep(1000); // 点击圣遗物
         click(660, 1010); await sleep(1000); // 点击分解
         click(300, 1020); await sleep(1000); // 点击快速选择
